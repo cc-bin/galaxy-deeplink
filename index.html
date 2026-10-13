@@ -52,7 +52,7 @@
     tip.textContent='Android 微信内置浏览器暂不支持唤起 App，请点击右上角菜单并选择“在浏览器打开”。';
     return;
   }
-  button.href=(isAndroid || isIOS)?scheme:target.href;
+  button.href=isAndroid?scheme:target.href;
   button.removeAttribute('aria-disabled');
   let launchTimer=null;
   let appLeftPage=false;
@@ -78,7 +78,7 @@
       if(!appLeftPage && !document.hidden) location.href=isAndroid?playStore:appStore;
     },fallbackTimeout);
   });
-  tip.textContent=isAndroid?'Android：优先使用 Scheme，未检测到唤起时尝试 Google Play':isIOS?'iOS：优先使用 Scheme，未检测到唤起时尝试 App Store（受浏览器限制）':'其他平台：使用 HTTPS 链接打开';
+  tip.textContent=isAndroid?'Android：优先使用 Scheme，未检测到唤起时尝试 Google Play':isIOS?'iOS：优先使用 Universal Link，未检测到唤起时尝试 App Store（受浏览器限制）':'其他平台：使用 HTTPS 链接打开';
 })();
 </script>
 </body>
