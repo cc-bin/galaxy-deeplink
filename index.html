@@ -42,12 +42,31 @@
   // 注意：scheme 的 host/path 必须与 Android App 的 intent-filter 和路由解析规则匹配。
   // https://host/route/hotel_detail?id=x => gpcmobile://route/hotel_detail?id=x
   const scheme='gpcmobile://'+target.pathname.replace(/^\/+/, '')+target.search+target.hash;
+  const playStore='https://play.google.com/store/apps/details?id=com.galaxyentertainment.gpcmobile';
+  const appStore='https://apps.apple.com/us/app/id1451146460';
+  let launchTimer=null;
+  let appLeftPage=false;
+  function cancelFallback(){
+    appLeftPage=true;
+    if(launchTimer!==null){clearTimeout(launchTimer);launchTimer=null;}
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden) cancelFallback();
+  });
+  window.addEventListener('pagehide',cancelFallback);
   button.disabled=false;
   button.addEventListener('click',function(){
-    if(isAndroid){location.href=scheme;}
-    else {location.href=target.href;}
+    if(!isAndroid && !isIOS){location.href=target.href;return;}
+    appLeftPage=false;
+    if(launchTimer!==null) clearTimeout(launchTimer);
+    // 浏览器无法准确检测 App 是否安装。超时仍可见时尝试商店兜底。
+    launchTimer=setTimeout(function(){
+      launchTimer=null;
+      if(!appLeftPage && !document.hidden) location.href=isAndroid?playStore:appStore;
+    },2000);
+    location.href=isAndroid?scheme:target.href;
   });
-  tip.textContent=isAndroid?'Android：使用 Scheme 打开':isIOS?'iOS：使用 Universal Links 打开':'其他平台：使用 HTTPS 链接打开';
+  tip.textContent=isAndroid?'Android：优先使用 Scheme，未检测到唤起时尝试 Google Play':isIOS?'iOS：优先使用 Universal Links，未检测到唤起时尝试 App Store（受浏览器限制）':'其他平台：使用 HTTPS 链接打开';
 })();
 </script>
 </body>
