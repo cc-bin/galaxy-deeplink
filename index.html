@@ -29,7 +29,7 @@
   let target;
   try {
     target=new URL(sharing);
-    if(target.protocol!=='https:' || !['mgpcapp.galaxymacau.com','mgpcapp.gegtlab.com'].includes(target.hostname) || !target.pathname.startsWith('/route/')) throw new Error('invalid');
+    if(target.protocol!=='https:' || !['mgpcapp.galaxymacau.com','mgpcapp.gegtlab.com'].includes(target.hostname)) throw new Error('invalid');
   } catch(e){
     shareUrl.textContent='无效或缺失的 sharing 参数';
     tip.textContent='请通过包含有效 sharing 参数的链接访问。';
