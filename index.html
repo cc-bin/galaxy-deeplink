@@ -38,12 +38,19 @@
   shareUrl.textContent=target.href;
   const ua=navigator.userAgent;
   const isAndroid=/Android/i.test(ua);
+  const isWeChat=/MicroMessenger/i.test(ua);
   const isIOS=/iPhone|iPad|iPod/i.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
   // 注意：scheme 的 host/path 必须与 Android App 的 intent-filter 和路由解析规则匹配。
   // https://host/route/hotel_detail?id=x => gpcmobile://route/hotel_detail?id=x
   const scheme='gpcmobile://'+target.pathname.replace(/^\/+/, '')+target.search+target.hash;
   const playStore='https://play.google.com/store/apps/details?id=com.galaxyentertainment.gpcmobile';
   const appStore='https://apps.apple.com/us/app/id1451146460';
+  if(isAndroid && isWeChat){
+    button.textContent='请使用手机浏览器打开';
+    button.disabled=true;
+    tip.textContent='Android 微信内置浏览器暂不支持唤起 App，请点击右上角菜单并选择“在浏览器打开”。';
+    return;
+  }
   let launchTimer=null;
   let appLeftPage=false;
   function cancelFallback(){
