@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>打开 OneApp</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18202c}.card{width:min(92vw,460px);background:#fff;border-radius:18px;padding:28px;box-shadow:0 8px 30px #172b4d12}h1{font-size:22px;margin:0;text-align:center}.button{display:block;width:100%;border:0;border-radius:10px;padding:14px;background:#1458d4;color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:22px;text-align:center;text-decoration:none}.button[aria-disabled="true"]{opacity:.55;pointer-events:none}.tip{font-size:13px;color:#64748b;line-height:1.6;margin:14px 0 0;text-align:center}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>打开银河度假 OneApp</h1>
+  <a class="button" id="openBtn" href="#">打开 OneApp</a>
+  <div class="tip" id="tip"></div>
+</main>
+<script>
+(function(){
+  'use strict';
+
+  const button=document.getElementById('openBtn');
+  const tip=document.getElementById('tip');
+  const ua=navigator.userAgent;
+  const isAndroid=/Android/i.test(ua);
+  const isWeChat=/MicroMessenger/i.test(ua);
+  const isIOS=/iPhone|iPad|iPod/i.test(ua) ||
+    (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  const packageName='com.galaxyentertainment.gpcmobile';
+  const playStore='https://play.google.com/store/apps/details?id='+packageName;
+  // Android：包名指定 App，scheme 命中 SplashActivity 的通用启动 intent-filter。
+  const androidIntent='intent://#Intent;scheme=gpcmobile;package='+packageName+
+    ';S.browser_fallback_url='+encodeURIComponent(playStore)+';end';
+  // iOS 使用 App 已注册的自定义 URL Scheme 启动 OneApp。
+  const iosAppScheme='gpcmobile://';
+
+  if(isAndroid && isWeChat){
+    button.textContent='请使用手机浏览器打开';
+    button.removeAttribute('href');
+    button.setAttribute('aria-disabled','true');
+    tip.textContent='Android 微信内置浏览器暂不支持唤起 App，请点击右上角菜单并选择“在浏览器打开”。';
+    return;
+  }
+
+  if(isAndroid){
+    button.href=androidIntent;
+    tip.textContent='点击后将尝试打开 OneApp。未安装时会前往 Google Play。';
+  }else if(isIOS){
+    button.href=iosAppScheme;
+    tip.textContent='点击后将尝试打开 OneApp。';
+  }else{
+    button.removeAttribute('href');
+    button.setAttribute('aria-disabled','true');
+    tip.textContent='请在 iPhone 或 Android 手机上打开此页面。';
+  }
+})();
+</script>
+</body>
+</html>
