@@ -5,11 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>打开 OneApp</title>
 <style>
-  *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f5f7fb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18202c}.card{width:min(92vw,460px);background:#fff;border-radius:18px;padding:28px;box-shadow:0 8px 30px #172b4d12}h1{font-size:22px;margin:0;text-align:center}.button{display:block;width:100%;border:0;border-radius:10px;padding:14px;background:#1458d4;color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:22px;text-align:center;text-decoration:none}.button[aria-disabled="true"]{opacity:.55;pointer-events:none}.tip{font-size:13px;color:#64748b;line-height:1.6;margin:14px 0 0;text-align:center}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at top,#fffaf0 0,#f5f7fb 58%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18202c}
+  .card{position:relative;overflow:hidden;width:min(92vw,460px);background:#fff;border:1px solid #eee8dc;border-radius:22px;padding:32px 28px 28px;box-shadow:0 16px 48px #493c2412;text-align:center}
+  .card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#b49759,#ead9ad,#b49759)}
+  .success-mark{width:62px;height:62px;margin:2px auto 16px;display:grid;place-items:center;border-radius:50%;background:#f7f1e3;color:#9c7e3e}
+  .success-mark svg{width:31px;height:31px}
+  .success-title{margin:0 0 25px;color:#70592e;font-size:23px;font-weight:700;letter-spacing:.04em}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,#eee8dc,transparent);margin-bottom:23px}
+  h1{font-size:18px;margin:0;color:#273142}
+  .button{display:block;width:100%;border:0;border-radius:11px;padding:14px;background:linear-gradient(135deg,#c6a96b,#a98a4e);color:#fff;font-size:16px;font-weight:600;cursor:pointer;margin-top:20px;text-align:center;text-decoration:none;box-shadow:0 6px 14px #a98a4e30}
+  .button[aria-disabled="true"]{opacity:.55;pointer-events:none;box-shadow:none}
+  .tip{font-size:13px;color:#7c8491;line-height:1.6;margin:13px 0 0;text-align:center}
 </style>
 </head>
 <body>
 <main class="card">
+  <div class="success-mark" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="m8 16.5 5.2 5.2L24.5 10" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+  <p class="success-title">预订成功！</p>
+  <div class="divider" aria-hidden="true"></div>
   <h1>打开银河度假 OneApp</h1>
   <a class="button" id="openBtn" href="#">打开 OneApp</a>
   <div class="tip" id="tip"></div>
