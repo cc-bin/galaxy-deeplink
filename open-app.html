@@ -28,7 +28,7 @@
   const packageName='com.galaxyentertainment.gpcmobile';
   const playStore='https://play.google.com/store/apps/details?id='+packageName;
   // Android：通过 MAIN/LAUNCHER action 和包名启动 App，不附加 deep link scheme 或路由。
-  const androidIntent='intent:#Intent;action=android.intent.action.MAIN;'+
+  const androidIntent='intent://#Intent;action=android.intent.action.MAIN;'+
     'category=android.intent.category.LAUNCHER;package='+packageName+
     ';S.browser_fallback_url='+encodeURIComponent(playStore)+';end';
   // iOS 使用 App 已注册的自定义 URL Scheme 启动 OneApp。
